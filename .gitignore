@@ -7,7 +7,7 @@
 *.log
 *.bak
 *~
-/nbproject/private/
+**/nbproject/private/
 .DS_Store
 Thumbs.db
 desktop.ini
@@ -16,3 +16,4 @@ desktop.ini
 
 hs_err_pid*
 replay_pid*
+/Library-Java-Form/build/
