@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Home/Desktop/Git/Java/library-java-form/Library-Java-Form/src/library/java/form/LibraryJavaForm.java</file>
+            <file>file:/C:/Users/Home/Desktop/Git/Teste/library-java-form/Library-Java-Form/src/bll/AuthorBll.java</file>
+            <file>file:/C:/Users/Home/Desktop/Git/Teste/library-java-form/Library-Java-Form/src/dto/BookDto.java</file>
         </group>
     </open-files>
 </project-private>

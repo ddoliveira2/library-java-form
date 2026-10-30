@@ -1,0 +1,100 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package dal;
+
+import Interfaces.DalInterface;
+import dao.MySqlContext;
+import dto.CategoryDto;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Optional;
+
+/**
+ *
+ * @author Home
+ */
+public class CategoryDal implements DalInterface<CategoryDto>{
+
+    private String sql = "";
+    private final MySqlContext _conn;
+    
+    public CategoryDal(){
+        this._conn = new MySqlContext();
+    }
+
+    @Override
+    public ResultSet GetOne(CategoryDto obj) {
+        sql = String.format("select * from category c where c.id = %d", obj.getId());
+        return this._conn.Consultar(sql);
+    }
+
+    @Override
+    public ResultSet GetList(CategoryDto obj, Boolean status) {
+        
+        if(status != null){
+            sql = String.format("select * from category c where c.name like '%%%s%%' and c.status = %b", obj.getName(),obj.getStatus());
+            return this._conn.Consultar(sql);            
+        }
+        else{
+            sql = String.format("select * from category c where c.name like '%%%s%%'", obj.getName());
+            return this._conn.Consultar(sql);            
+        }   
+    }
+
+    @Override
+    public int Create(CategoryDto obj) {
+        
+        ResultSet rs;
+        int id = 0;
+        try{
+        
+            sql = String.format("insert into category (name,description,status) values ('%s','%s',true)", obj.getName(),obj.getDescription());
+            this._conn.ExecutaSql(sql);
+
+            sql = "SELECT LAST_INSERT_ID() id";
+            rs = _conn.Consultar(sql);
+            while(rs.next()){
+                id = rs.getInt("id");
+            }
+             return id;        
+        
+        }
+        catch(SQLException ex){
+        
+        }
+        return id;
+    }
+
+    @Override
+    public void Update(CategoryDto obj) {
+        sql = String.format("update category c set c.name = '%s', c.description = '%s', c.status=%b where c.id =%d;", obj.getName(),obj.getDescription(),obj.getStatus(),obj.getId());
+        _conn.ExecutaSql(sql);
+    }
+
+    @Override
+    public void Delete(CategoryDto obj) {
+        sql = String.format("delete from category c where c.id =%d", obj.getId());
+        _conn.ExecutaSql(sql);
+    }
+
+    @Override
+    public boolean Exists(CategoryDto obj) {
+        ResultSet rs;
+        boolean exists = true;
+        try
+        {
+            sql = String.format("select COUNT(c.id) exist from author c where c.id <> %d and c.name ='%s';", obj.getId(),obj.getName());
+            rs = _conn.Consultar(sql);
+            while(rs.next()){
+                if(rs.getInt("exist") == 0)
+                    exists = false;
+            }
+        }
+        catch(SQLException ex){
+        }
+        return exists;
+    }
+
+}
